@@ -5,7 +5,7 @@
 .include "lib.inc"
 .include "bitmap.s"
 
-COLOR = $ee
+COLOR = $9e
 
 .segment "ZERO_PAGE": zeropage
 LineCounter:    .res    1
@@ -76,7 +76,7 @@ overScanDone:
 ; This kernel displays a 96 x 192 bitmap on alternating frames of 48x192.
 ;
 ; Based on the 6-digit score trick as documented in TIA_HW_Notes.txt and
-; in BIGMOVE.ASM
+; in BIGMOVE.ASM and https://www.masswerk.at/rc2018/04/10.html
 ;
 ; Pointers to the bitmaps are stored in ZP addresses bitmap0..5
 ; bitmaps are stored upside down in memory (last line at offset 0) to take
@@ -93,7 +93,7 @@ bitmapKernel:
         lda     #%00000011              ; 3 copies of P0 and P1 
         sta     NUSIZ0                  ; with close spacing
         sta     NUSIZ1                  ;
-        sta     VDELP0                  ; D0 = enable vertical delay
+        sta     VDELP0                  ; D0 = enable vertical delay regs
         sta     VDELP1                  ; 
         lda     #$00                    ; set background colour
         sta     COLUBK                  ; 
