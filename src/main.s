@@ -5,13 +5,14 @@
 .include "lib.inc"
 .include "bitmap.s"
 
-COLOR = $9e
+COLOUR = $c8
 
 .segment "ZERO_PAGE": zeropage
 LineCounter:    .res    1
 Temp:           .res    1
 FrameCounter:   .res    1
 BTable:         .res    12
+Colour:         .res    1
 
 .segment "CODE"
 Reset:  
@@ -30,6 +31,9 @@ Reset:
         set16   bitmap3, BTable+6
         set16   bitmap4, BTable+8
         set16   bitmap5, BTable+10
+
+        lda     #COLOUR
+        sta     Colour
 
         jmp     Main
 
@@ -121,8 +125,8 @@ bmLeft: bankRom 0, 1                    ; use the same addresses for both
         sta     RESP1                   ;  28 (3)
         delay   42                      ;  31 (42)
         sta     HMOVE                   ;  73 (3)
-        delay   41                      ;   0 (41)
-        lda     #COLOR                  ;  41 (2)      set up colours for
+        delay   40                      ;   0 (40)
+        lda     Colour                  ;  40 (3)      set up colours for
         sta     COLUP0                  ;  43 (3)       P0 and P1
         sta     COLUP1                  ;  46 (3)
         jmp     bmLoop                  ;  49 (3)
@@ -137,8 +141,8 @@ bmRight:
         sta     RESP1                   ;  44 (3)
         delay   26                      ;  47 (26)
         sta     HMOVE                   ;  73 (3)
-        delay   58                      ;   0 (58)
-        lda     #COLOR                  ;  58 (2)       set up colours 
+        delay   57                      ;   0 (57)
+        lda     Colour                  ;  57 (3)       set up colours 
         sta     COLUP0                  ;  60 (3)       for P0 and P1
         sta     COLUP1                  ;  63 (3)
         jmp     bmLoop                  ;  66 (3)
