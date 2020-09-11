@@ -1,1 +1,6 @@
 *.o
+game.3ep
+game.labels
+game.map
+game.sym
+src/bitmap.s
