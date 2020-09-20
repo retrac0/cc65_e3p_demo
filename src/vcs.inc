@@ -76,3 +76,11 @@ TIM1T  := $0294
 TIM8T  := $0295
 TIM64T := $0296
 TIM1024T := $0297
+
+; based on TIA WRITE ADDRESS SUMMARY table in the Stella Programmer's Guide
+
+TIA_VSYNC_ON        =   %00000010   ; D1 controls VSYNC
+TIA_VSYNC_OFF       =   0           
+
+TIA_VBLANK_ON       =   %01000010
+TIA_VBLANK_OFF      =   %01000000

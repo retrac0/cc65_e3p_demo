@@ -49,7 +49,7 @@ Main:
 
 ; send VSYNC and draw vblank period
 vBlankStart:
-        lda     #%00000010              ; vsync on
+        lda     #TIA_VSYNC_ON           ; vsync on
         sta     VSYNC   
         sta     WSYNC                   ; 3 lines of VSYNC
         sta     WSYNC   
@@ -106,8 +106,8 @@ bitmapKernel:
         lda     #%10100000              ; and P1 HMOVE horizontal -7
         sta     HMP1                    ;  
 
-        ldy     #191                    ; draw the final line manually
-                                        ; after the loop, so only 191 lines
+        ldy     #192                    ; drawing 192 lines
+                                        ; 
         sty     LineCounter             ; keep in Y, used later in bmLoop
 
         inc     FrameCounter            ; we increment FrameCounter every 
@@ -168,25 +168,6 @@ bmLoop:
         sty     GRP0                    ;  65 (3) 
         dec     LineCounter             ;  68 (5)
         bne     bmLoop                  ;  73 (2,3)
-
-        delay   7                       ;  -1 (7)       fall through for
-        ldy     LineCounter             ;   6 (3)       final line
-        lda     (BTable+0), y           ;   9 (5)
-        sta     GRP0                    ;  14 (3)
-        lda     (BTable+2), y           ;  17 (5) 
-        sta     GRP1                    ;  22 (3)
-        lda     (BTable+4), y           ;  25 (5)
-        sta     GRP0                    ;  30 (3)
-        lda     (BTable+8), y           ;  33 (5)
-        sta     Temp                    ;  36 (3)
-        lax     (BTable+10), y          ;  41 (5)
-        lda     (BTable+6), y           ;  46 (5)
-        ldy     Temp                    ;  51 (3)
-        nop                             ;  54 (2)
-        sta     GRP1                    ;  56 (3)       
-        sty     GRP0                    ;  59 (3)
-        stx     GRP1                    ;  62 (3)
-        sty     GRP0                    ;  65 (3)
         sta     WSYNC                   ; done
         lda     #%01000010              ; blank screen
         sta     VBLANK

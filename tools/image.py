@@ -7,6 +7,7 @@
 # 192 bytes representing 8 bits are stored in reverse order (bottom to top)
 # with 3 columns stored, aligned to $100, per data section
 # RODATA, RODATA1... etc.
+# the 0th byte is null (reserved for header + simplifies offset in draw loop)
 
 from PIL import Image
 
@@ -23,7 +24,7 @@ for i in range(0,12):
     block.append([])
 
 for i in range(0,12):
-    block[i] = ".align $100\nbitmap" + str(i) + ":\n"
+    block[i] = ".align $100\nbitmap" + str(i) + ":\n.byte 0\n"
 
 def repack(input):
     out = list(".byte   %")
