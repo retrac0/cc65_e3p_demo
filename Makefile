@@ -1,8 +1,9 @@
 
 all: 
 	./tools/image.py > src/bitmap.s
+	ca65 -g -o src/forth.o src/forth.s -I.
 	ca65 -g -o src/main.o src/main.s -I.
-	ld65 -C 3ep.cfg -m game.map -Ln game.labels -vm -o game.3ep src/main.o 
+	ld65 -C 3ep.cfg -m game.map -Ln game.labels -vm -o game.3ep src/main.o src/forth.o
 	./tools/labelconvert.py game.labels game.sym
 
 clean:

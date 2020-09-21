@@ -7,7 +7,9 @@
 
 COLOUR = $c8
 
-.segment "ZERO_PAGE": zeropage
+.global init
+
+.segment "ZEROPAGE": zeropage
 LineCounter:    .res    1
 Temp:           .res    1
 FrameCounter:   .res    1
@@ -38,6 +40,7 @@ Reset:
         jmp     Main
 
 Main:
+        jmp init
         jsr     vBlankStart             ; setup vblank timer
         ; do stuff
         jsr     vBlankDone              ; catch vblank timer
